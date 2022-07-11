@@ -1,3 +1,4 @@
+import random
 import tkinter as tk
 from tkinter import ttk, BooleanVar
 from turtle import window_height, window_width
@@ -9,6 +10,18 @@ window_height = 400
 img_w = 300
 img_h = 400
 
+_7seg_dict = {}
+_7seg_dict['0'] = [True, True, True, False, True, True, True]
+_7seg_dict['1'] = [False, False, True, False, False, True, False]
+_7seg_dict['2'] = [True, False, True, True, True, False, True]
+_7seg_dict['3'] = [True, False, True, True, False, True, True]
+_7seg_dict['4'] = [False, True, True, True, False, True, False]
+_7seg_dict['5'] = [True, True, False, True, False, True, True]
+_7seg_dict['6'] = [True, True, False, True, True, True, True]
+_7seg_dict['7'] = [True, False, True, False, False, True, False]
+_7seg_dict['8'] = [True, True, True, True, True, True, True]
+_7seg_dict['9'] = [True, True, True, True, False, True, True]
+dict_letters = list(_7seg_dict.keys())
 
 class Application(ttk.Frame):
     def __init__(self, master):
@@ -78,10 +91,16 @@ class Application(ttk.Frame):
     def draw_material(self):
         self.canvas_root.delete('all')
         self.canvas_draw_parts(self.img_root)
+
+        left_letter = random.choice(dict_letters)
+        right_letter = random.choice(dict_letters)
+
         for i in range(7):
-            self.canvas_draw_parts(self.img_7seg_left[i])
+            if(_7seg_dict[left_letter][i]):
+                self.canvas_draw_parts(self.img_7seg_left[i])
         for i in range(7):
-            self.canvas_draw_parts(self.img_7seg_right[i])
+            if(_7seg_dict[right_letter][i]):
+                self.canvas_draw_parts(self.img_7seg_right[i])
         for i in range(6):
             if(self.switch_status[i].get()):
                 self.canvas_draw_parts(self.img_switch[i])
